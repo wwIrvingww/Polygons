@@ -1,35 +1,32 @@
 mod color;
 mod framebuffer;
+mod line_impl;
 mod bmp;
 
 use framebuffer::Framebuffer;
+use line_impl::Line;
 
 fn main() -> std::io::Result<()> {
-    let mut framebuffer = Framebuffer::new(800, 600);
+    let width = 800;
+    let height = 600;
+    let mut framebuffer = Framebuffer::new(width, height);
 
-    framebuffer.set_background_color(0xADD8E6); // Light blue
+    // Clear the framebuffer with a white background
+    framebuffer.set_background_color(0xFFFFFF);
     framebuffer.clear();
 
-    framebuffer.set_current_color(0xFF0000); // Red
-    framebuffer.point(400, 300);
-    framebuffer.point(401, 300);
-    framebuffer.point(400, 301);
-    framebuffer.point(401, 301);
+    // Set the current drawing color to black
+    framebuffer.set_current_color(0x000000);
 
-    framebuffer.set_current_color(0x00FF00); // Green
-    framebuffer.point(200, 150);
-    framebuffer.point(201, 150);
-    framebuffer.point(200, 151);
-    framebuffer.point(201, 151);
+    // Draw some lines using Bresenham's algorithm
+    framebuffer.line(100, 100, 700, 500);
+    framebuffer.line(700, 100, 100, 500);
+    framebuffer.line(400, 50, 400, 550);
+    framebuffer.line(50, 300, 750, 300);
 
-    framebuffer.set_current_color(0x0000FF); // Blue
-    framebuffer.point(600, 450);
-    framebuffer.point(601, 450);
-    framebuffer.point(600, 451);
-    framebuffer.point(601, 451);
+    // Save the framebuffer as a BMP file
+    framebuffer.render_buffer("lines.bmp")?;
 
-    framebuffer.render_buffer("output.bmp")?;
-
-    println!("Framebuffer rendered to output.bmp");
+    println!("Framebuffer rendered to lines.bmp");
     Ok(())
 }
