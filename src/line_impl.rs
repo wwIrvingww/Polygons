@@ -1,30 +1,31 @@
-use crate::framebuffer::Framebuffer;
+use crate::framebuffer::FrameBuffer;
 
 pub trait Line {
     fn line(&mut self, x1: isize, y1: isize, x2: isize, y2: isize);
 }
 
-impl Line for Framebuffer {
+impl Line for FrameBuffer {
     fn line(&mut self, x1: isize, y1: isize, x2: isize, y2: isize) {
-        let mut x1 = x1;
-        let mut y1 = y1;
+        let mut x = x1;
+        let mut y = y1;
         let dx = (x2 - x1).abs();
-        let dy = (y2 - y1).abs();
+        let dy = -(y2 - y1).abs();
         let sx = if x1 < x2 { 1 } else { -1 };
         let sy = if y1 < y2 { 1 } else { -1 };
-        let mut err = if dx > dy { dx / 2 } else { -dy / 2 };
+        let mut err = dx + dy;
 
         loop {
-            self.point(x1, y1);
-            if x1 == x2 && y1 == y2 { break; }
-            let e2 = err;
-            if e2 > -dx {
-                err -= dy;
-                x1 += sx;
+            self.point(x, y);
+
+            if x == x2 && y == y2 { break; }
+            let e2 = 2 * err;
+            if e2 >= dy {
+                err += dy;
+                x += sx;
             }
-            if e2 < dy {
+            if e2 <= dx {
                 err += dx;
-                y1 += sy;
+                y += sy;
             }
         }
     }
