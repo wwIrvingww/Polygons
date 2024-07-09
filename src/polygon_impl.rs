@@ -1,25 +1,27 @@
-use crate::framebuffer::FrameBuffer;
+use crate::framebuffer::Framebuffer;
 use crate::line_impl::Line;
+use nalgebra_glm as glm;
 
 pub trait Polygon {
-    fn draw_polygon(&mut self, points: &[(isize, isize)]);
+    fn draw_polygon(&mut self, points: &[glm::Vec3]);
 }
 
-impl Polygon for FrameBuffer {
-    fn draw_polygon(&mut self, points: &[(isize, isize)]) {
+impl Polygon for Framebuffer {
+    fn draw_polygon(&mut self, points: &[glm::Vec3]) {
         if points.len() < 2 {
-            return;
+            return; // Necesitamos al menos dos puntos para dibujar una línea
         }
 
-        for i in 0..points.len() - 1 {
-            let (x1, y1) = points[i];
-            let (x2, y2) = points[i + 1];
-            self.line(x1, y1, x2, y2);
-        }
+        for i in 0..points.len() {
+            let start = points[i];
+            let end = if i == points.len() - 1 {
+                points[0] // Conectar el último punto con el primero
+            } else {
+                points[i + 1]
+            };
 
-        // Draw line from last point to the first point
-        let (x1, y1) = points[points.len() - 1];
-        let (x2, y2) = points[0];
-        self.line(x1, y1, x2, y2);
+            // Dibuja la línea entre los puntos start y end
+            self.line(start, end);
+        }
     }
 }
