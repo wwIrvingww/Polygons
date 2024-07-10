@@ -62,3 +62,33 @@ fn fill_polygon(framebuffer: &mut Framebuffer, points: &[glm::Vec2], fill_color:
         }
     }
 }
+
+pub fn draw_polygons(framebuffer: &mut Framebuffer) {
+    // Define los puntos del polígono 1
+    let polygon1_points = vec![
+        glm::vec2(165.0, 380.0),
+        glm::vec2(185.0, 360.0),
+        glm::vec2(180.0, 330.0),
+        glm::vec2(207.0, 345.0),
+        glm::vec2(233.0, 330.0),
+        glm::vec2(230.0, 360.0),
+        glm::vec2(250.0, 380.0),
+        glm::vec2(220.0, 385.0),
+        glm::vec2(205.0, 410.0),
+        glm::vec2(193.0, 383.0),
+    ];
+
+    // Define los puntos del polígono 2
+    let polygon2_points = vec![
+        glm::vec2(321.0, 335.0),
+        glm::vec2(288.0, 286.0),
+        glm::vec2(339.0, 251.0),
+        glm::vec2(374.0, 302.0),
+    ];
+
+    // Dibuja y rellena el polígono 1
+    draw_fill_polygon(framebuffer, &polygon1_points, 0xFFFFFF, 0xFFFF00);
+    
+    // Dibuja y rellena el polígono 2
+    draw_fill_polygon(framebuffer, &polygon2_points, 0xFFFFFF, 0x0000FF);
+}
