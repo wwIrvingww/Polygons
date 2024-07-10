@@ -6,6 +6,7 @@ mod bmp;
 use nalgebra_glm as glm;
 use framebuffer::Framebuffer;
 use line_impl::Line;
+use polygon_impl::Polygon;
 
 fn main() {
     let mut framebuffer = Framebuffer::new(800, 600);
@@ -64,16 +65,20 @@ fn main() {
         0x00FFFF, // Cian
     ];
 
-    // Dibujamos las líneas que conectan los vértices
-    let edges = vec![
-        (0, 1), (1, 3), (3, 2), (2, 0), // Front face
-        (4, 5), (5, 7), (7, 6), (6, 4), // Back face
-        (0, 4), (1, 5), (2, 6), (3, 7)  // Connecting edges
+    // Dibujamos las líneas que conectan los vértices y rellenamos las caras del cubo
+    let faces = vec![
+        vec![0, 1, 3, 2], // Front face
+        vec![4, 5, 7, 6], // Back face
+        vec![0, 1, 5, 4], // Top face
+        vec![2, 3, 7, 6], // Bottom face
+        vec![0, 2, 6, 4], // Left face
+        vec![1, 3, 7, 5], // Right face
     ];
 
-    for (i, &(start, end)) in edges.iter().enumerate() {
+    for (i, face) in faces.iter().enumerate() {
         framebuffer.set_foreground_color(colors[i % colors.len()]);
-        framebuffer.line(final_vertices[start], final_vertices[end]);
+        let face_vertices: Vec<glm::Vec3> = face.iter().map(|&index| final_vertices[index]).collect();
+        framebuffer.draw_polygon(&face_vertices);
     }
 
     // Renderiza el framebuffer en un archivo BMP
