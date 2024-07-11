@@ -86,9 +86,57 @@ pub fn draw_polygons(framebuffer: &mut Framebuffer) {
         glm::vec2(374.0, 302.0),
     ];
 
+    // Define los puntos del polígono 3
+    let polygon3_points = vec![
+        glm::vec2(377.0, 249.0),
+        glm::vec2(411.0, 197.0),
+        glm::vec2(436.0, 249.0),
+    ];
+
+    // Define los puntos del polígono 4
+    let polygon4_points = vec![
+        glm::vec2(413.0, 177.0),
+        glm::vec2(448.0, 159.0),
+        glm::vec2(502.0, 88.0),
+        glm::vec2(553.0, 53.0),
+        glm::vec2(535.0, 36.0),
+        glm::vec2(676.0, 37.0),
+        glm::vec2(660.0, 52.0),
+        glm::vec2(750.0, 145.0),
+        glm::vec2(761.0, 179.0),
+        glm::vec2(672.0, 192.0),
+        glm::vec2(659.0, 214.0),
+        glm::vec2(615.0, 214.0),
+        glm::vec2(632.0, 230.0),
+        glm::vec2(580.0, 230.0),
+        glm::vec2(597.0, 215.0),
+        glm::vec2(552.0, 214.0),
+        glm::vec2(517.0, 144.0),
+        glm::vec2(466.0, 180.0),
+    ];
+
+    // Define los puntos del polígono 5
+    let polygon5_points = vec![
+        glm::vec2(682.0, 175.0),
+        glm::vec2(708.0, 120.0),
+        glm::vec2(735.0, 148.0),
+        glm::vec2(739.0, 170.0),
+    ];
+
     // Dibuja y rellena el polígono 1
     draw_fill_polygon(framebuffer, &polygon1_points, 0xFFFFFF, 0xFFFF00);
     
     // Dibuja y rellena el polígono 2
     draw_fill_polygon(framebuffer, &polygon2_points, 0xFFFFFF, 0x0000FF);
+
+    // Dibuja y rellena el polígono 3
+    draw_fill_polygon(framebuffer, &polygon3_points, 0xFFFFFF, 0xFF0000);
+
+    // Dibuja y rellena el polígono 4
+    draw_fill_polygon(framebuffer, &polygon4_points, 0xFFFFFF, 0x00FF00);
+
+    // Dibuja el agujero (polígono 5)
+    framebuffer.set_foreground_color(0x000000); // Negro para el fondo
+    fill_polygon(framebuffer, &polygon5_points, 0x000000); // Rellenar el polígono 5 con negro
+    draw_fill_polygon(framebuffer, &polygon5_points, 0xFFFFFF, 0x000000); // Dibuja solo el borde blanco del polígono 5
 }

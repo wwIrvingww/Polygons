@@ -34,7 +34,7 @@ pub fn write_bmp_file(
     let row_size = (3 * width + 3) & !3; // Row size, rounded up to multiple of 4 bytes
     let padding_size = row_size - 3 * width;
 
-    for y in (0..height).rev() {
+    for y in 0..height {
         for x in 0..width {
             let index = y * width + x;
             let color = &buffer[index];

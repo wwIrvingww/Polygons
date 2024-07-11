@@ -9,7 +9,7 @@ use framebuffer::Framebuffer;
 fn main() {
     let mut framebuffer = Framebuffer::new(800, 600);
 
-    // Llama a la función draw_polygons para dibujar y rellenar ambos polígonos
+    // Llama a la función draw_polygons para dibujar y rellenar los polígonos
     lab_1::draw_polygons(&mut framebuffer);
 
     // Renderiza el framebuffer en un archivo BMP
